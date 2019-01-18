@@ -20,17 +20,17 @@ class Weather:
 class WeatherData:
     """Weather from OpenWeatherMap."""
 
-    def __init__(self, units="imperial"):
+    def __init__(self):
         self.weather_api_key = os.environ['OPEN_WEATHER_API']
         self.postal_code = os.environ['POSTAL_CODE']
+        self.units= os.environ['UNITS']
         self.base_url = 'https://api.openweathermap.org/data/2.5'
-        self.units = units
 
         self.url = "".join(
             [f"{self.base_url}",
              "{}",
-             f"?zip={self.postal_code},us&",
-             f"APPID={self.weather_api_key}",
+             f"?zip={self.postal_code}",
+             f"&APPID={self.weather_api_key}",
              f"&units={self.units}", ])
 
         self.current = self.current_data()
@@ -136,17 +136,17 @@ def data(get_api_data):
     GET_API_DATA = get_api_data
     if GET_API_DATA:
         weather_data = WeatherData()
-        with open('today_weather_data.tmp', 'wb+')as f:
+        with open('data/today_weather_data.tmp', 'wb+')as f:
             pickle.dump(weather_data, f)
     else:
-        with open('today_weather_data.tmp', 'rb') as f:
+        with open('data/today_weather_data.tmp', 'rb') as f:
             weather_data = pickle.load(f)
     return weather_data
 
 
 def main():
     """Get Weather Data."""
-    weather_data = data(get_api_data=False)
+    weather_data = data(get_api_data=True)
     current_data = parse_weather_data(weather_data.current)
     forecast_data = [asdict(parse_weather_data(data))
                      for data in weather_data.forecast_daily['list']]
