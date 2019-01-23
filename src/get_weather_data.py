@@ -9,6 +9,7 @@ from datetime import datetime
 from dateutil import tz
 from dataclasses import dataclass, asdict
 from pprint import pprint
+from weather_icons import weather_icons
 
 
 class Weather:
@@ -96,7 +97,7 @@ def parse_weather_data(data):
     datetime_local = data['dt']
     main_description = data['weather'][0]['main']
     description = data['weather'][0]['description']
-    icon = data['weather'][0]['icon']
+    icon = weather_icons[data['weather'][0]['icon']]
     try:
         temp_current = data['temp']['day']
         temp_hi_low = {'high': data['temp']['max'],
@@ -146,7 +147,7 @@ def data(get_api_data):
 
 def main():
     """Get Weather Data."""
-    weather_data = data(get_api_data=False)
+    weather_data = data(get_api_data=True)
     current_data = parse_weather_data(weather_data.current)
     forecast_data = [asdict(parse_weather_data(data))
                      for data in weather_data.forecast_daily['list']]
