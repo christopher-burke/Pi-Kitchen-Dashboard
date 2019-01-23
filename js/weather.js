@@ -21,7 +21,7 @@
 
 	// Yahoo! query interval (milliseconds)
 	// Default is every 15 minutes. Be reasonable. Don't query Yahoo every 500ms.
-	var waitBetweenWeatherQueriesMS = 900000;
+	var waitBetweenWeatherQueriesMS = 600000;
 
 	// You're done!
 	/*********************************/
@@ -46,7 +46,7 @@
 
 		// Insert the current details. Icons may be changed by editing the icons array.
 		if (icon.length) {
-			icon.html("<img width=100 height=100 src='https://openweathermap.org/img/w/" + currently.icon + ".png'>")
+			icon.html(currently.icon)
 		}
 		if (desc.length) {
 			desc.html(currently.description);
