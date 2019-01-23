@@ -67,16 +67,16 @@
 
 		// If this is the first cell, call it "Today" instead of the day of the week
 		if (day.length) {
-			if (day === 1) {
+			if (forecast.today) {
 				day.html('Today');
 			} else {
-				day.html(forecast.day);
+				day.html(forecast.datetime_local);
 			}
 		}
 
 		// Insert the forecast details. Icons may be changed by editing the icons array.
 		if (icon.length) {
-			icon.html("<img width=100 src='https://openweathermap.org/img/w/" + forecast.icon + ".png'>");
+			icon.html(forecast.icon);
 		}
 		if (desc.length) {
 			desc.html(forecast.main_description);
